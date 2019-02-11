@@ -1,0 +1,20 @@
+{
+  "name": "enhanced-table",
+  "version": "0.7.1",
+  "description": "This visualization plugin is like a Data Table, but with enhanced features like computed columns and filter bar",
+  "main": "index.js",
+  "kibana": {
+    "version": "6.3.2"
+  },
+  "dependencies": {
+    "expr-eval": "^1.2.1"
+  },
+  "build": {
+    "git": {
+      "count": "53",
+      "sha": "9857f39",
+      "date": "Sun, 24 Jun 2018 15:47:35 +0200"
+    },
+    "date": "Mon Jul 30 2018 22:08:23 GMT+0200 (Paris, Madrid (heure d’été))"
+  }
+}

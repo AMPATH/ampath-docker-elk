@@ -1,0 +1,18 @@
+{
+  "name": "patient-nav",
+  "version": "0.0.0",
+  "description": "An awesome Kibana plugin",
+  "main": "index.js",
+  "kibana": {
+    "version": "6.3.2",
+    "templateVersion": "8.0.0"
+  },
+  "build": {
+    "git": {
+      "count": "2",
+      "sha": "1db7750",
+      "date": "Mon, 30 Jul 2018 16:15:22 +0300"
+    },
+    "date": "Mon Jul 30 2018 16:17:08 GMT+0300 (EAT)"
+  }
+}

@@ -1,0 +1,11 @@
+elasticsearch/config/elasticsearch.yml
+elasticsearch/config/elasticsearch.keystore
+heartbeat/heartbeat.yml
+kibana/config/kibana.yml
+kibana/plugins/*/node_modules
+logstash/pipeline/*
+logstash/unused-pipelines/*
+logstash/single_pipeline/*
+logstash/config/logstash.yml
+logstash/last_run/*
+

@@ -1,0 +1,108 @@
+version: '2.0'
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+    environment:
+      - ELASTICSEARCH_USERNAME=*******
+      - ELASTICSEARCH_PASSWORD=*******
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=true
+      - xpack.ml.enabled=true
+      - xpack.watcher.enabled=true
+      - xpack.security.enabled=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - elasticsearch:/usr/share/elasticsearch/data
+    restart: always
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx8g -Xms8g"
+    networks:
+      - docker-elk
+   
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:6.3.2
+    volumes:
+      - ./logstash/config/mysql-connector-java-5.1.42-bin.jar:/usr/share/logstash/config/mysql-connector-java-5.1.42-bin.jar:ro
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./logstash/single-pipeline:/usr/share/logstash/single-pipeline:ro
+      - ./logstash/last_run:/tmp/last_run
+      - ./logstash/sql:/tmp/sql
+      - ./logstash/plugins:/usr/share/logstash/plugins
+      - ./logstash/ruby-scripts:/usr/share/logstash/ruby-scripts
+    ports:
+      - "5230:5000"
+      - "5231:13331"
+      - "5232:13332"
+    restart: always
+    environment:
+      LS_JAVA_OPTS: "-Xmx16g -Xms16g"
+    networks:
+      - docker-elk
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build:
+       context: ./kibana
+    volumes:
+      - ./kibana/config/:/usr/share/kibana/config:ro
+      - ./kibana/plugins:/usr/share/kibana/plugins
+    ports:
+      - "5601:5601"
+    restart: always
+    networks:
+      - docker-elk
+    depends_on:
+      - elasticsearch
+  
+
+  heartbeat:
+     build:
+       context: ./heartbeat
+     volumes:
+       - ./heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
+       - /etc/ssl/:/usr/share/heartbeat/ssl:ro
+     environment:
+       - output.elasticsearch.hosts=["elasticsearch:9200"]
+     networks:
+       - elk
+     depends_on:
+       - elasticsearch
+     restart: always
+     
+  elastic-search-sql:
+    build:
+      context: elasticsearch-sql-frontend/
+    ports:
+      - "4300:8080"
+    networks:
+      - docker-elk
+    depends_on:
+      - elasticsearch
+
+volumes:  
+
+  ldata:
+    driver: local
+
+  elasticsearch:
+    driver: local
+
+
+networks:
+
+  docker-elk:
+    driver: bridge

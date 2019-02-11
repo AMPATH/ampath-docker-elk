@@ -1,0 +1,18 @@
+{
+  "name": "kibana-iframe-communicator-plugin",
+  "version": "0.0.0",
+  "description": "A kibana plugin to demonstrate how can one communicate directly with Kibana hosted inside an IFrame, without the need to reload the iframe",
+  "main": "index.js",
+  "kibana": {
+    "version": "6.3.2",
+    "templateVersion": "8.0.0"
+  },
+  "build": {
+    "git": {
+      "count": "33",
+      "sha": "cd8e3d4",
+      "date": "Fri, 20 Apr 2018 10:56:41 +0300"
+    },
+    "date": "Thu Jul 26 2018 14:49:35 GMT+0300 (EAT)"
+  }
+}

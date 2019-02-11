@@ -1,0 +1,25 @@
+heartbeat.monitors:
+- type: http
+  schedule: '@every 10s'
+  urls:
+    - https://xxxxxx.xxxxxx.xxxxxxx/xxxxxx/
+    - https://xxxxxx.xxxxxx.xxxxxxx/xxxxxx/
+  check.request:
+    method: GET
+    headers:
+        'Content-Type': 'application/json' 
+        'Authorization': 'Bearer xxxxxxxxxxxx'
+  check.response:
+       status: 200
+
+
+processors:
+- add_cloud_metadata: ~
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  username: 'heartbeat'
+  password: 'xxxxxxxxxxxxx'
+
+setup.kibana:
+  host: "kibana:5601"
