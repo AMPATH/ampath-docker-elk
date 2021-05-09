@@ -28,7 +28,7 @@
   "homepage": "https://github.com/datasweet-fr/kibana-datasweet-formula#readme",
   "dependencies": {
     "expr-eval": "^1.2.1",
-    "lodash": "^4.17.13"
+    "lodash": "^4.17.21"
   },
   "build": {
     "git": {
